@@ -7,11 +7,3 @@ variable "github_token" {
 provider "github" {
   token = var.github_token
 }
-
-# C'est ce bloc qui va réellement créer le repository sur GitHub
-resource "github_repository" "vmware-ansible" {
-  name        = "vmcluster"
-  description = "Mon superbe projet géré par Terraform"
-  visibility  = "private"
-  auto_init   = true # Crée automatiquement le README.md
-}
