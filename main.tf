@@ -12,6 +12,6 @@ provider "github" {
 resource "github_repository" "vmware-ansible" {
   name        = "vmcluster"
   description = "Mon superbe projet géré par Terraform"
-  visibility  = "public"
+  visibility  = "private"
   auto_init   = true # Crée automatiquement le README.md
 }
