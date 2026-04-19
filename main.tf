@@ -1,14 +1,14 @@
 terraform {
   required_providers {
-    # On garde le provider GitHub
+    # Configuration du provider GitHub
     github = {
       source  = "integrations/github"
       version = "~> 6.0"
     }
-    # On ajoute le provider Docker
+    # Configuration du provider Docker
     docker = {
       source  = "kreuzwerker/docker"
-      version = "~> 3.0"
+      version = "~> 3.0.1"
     }
   }
 }
@@ -25,48 +25,37 @@ variable "github_token" {
 }
 
 # --- Configuration DOCKER ---
-provider "docker" {
-  host = "npipe:////./pipe/docker_engine" # Indispensable pour Windows
-}
+# On laisse vide pour que Terraform choisisse automatiquement
+# le bon protocole (Unix pour Linux/Pipeline ou npipe pour Windows)
+provider "docker" {}
 
+# --- Ressources KALI ---
 resource "docker_image" "kali" {
-  name = "kalilinux/kali-rolling"
+  name         = "kalilinux/kali-rolling"
+  keep_locally = false
 }
 
 resource "docker_container" "kali_container" {
-  image = docker_image.kali.image_id
-  name  = "mon-kali-docker"
+  image      = docker_image.kali.image_id
+  name       = "mon-kali-docker"
   stdin_open = true
   tty        = true
 }
 
-terraform {
-  required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 3.0.1"
-    }
-  }
-}
-
-provider "docker" {}
-
+# --- Ressources UBUNTU ---
 resource "docker_image" "ubuntu" {
   name         = "ubuntu:latest"
   keep_locally = false
 }
 
 resource "docker_container" "ubuntu_target" {
-  image = docker_image.ubuntu.image_id
-  name  = "mon_ubuntu_terraform"
-  
-  # Pour qu'il reste allumé et qu'on puisse se connecter
+  image      = docker_image.ubuntu.image_id
+  name       = "mon_ubuntu_terraform"
   stdin_open = true
   tty        = true
-  
+
   ports {
     internal = 22
     external = 2222
   }
 }
-
