@@ -39,3 +39,34 @@ resource "docker_container" "kali_container" {
   stdin_open = true
   tty        = true
 }
+
+terraform {
+  required_providers {
+    docker = {
+      source  = "kreuzwerker/docker"
+      version = "~> 3.0.1"
+    }
+  }
+}
+
+provider "docker" {}
+
+resource "docker_image" "ubuntu" {
+  name         = "ubuntu:latest"
+  keep_locally = false
+}
+
+resource "docker_container" "ubuntu_target" {
+  image = docker_image.ubuntu.image_id
+  name  = "mon_ubuntu_terraform"
+  
+  # Pour qu'il reste allumé et qu'on puisse se connecter
+  stdin_open = true
+  tty        = true
+  
+  ports {
+    internal = 22
+    external = 2222
+  }
+}
+
