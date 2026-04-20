@@ -63,15 +63,6 @@ resource "docker_container" "ubuntu_target" {
   }
 }
 
-terraform {
-  required_providers {
-    github = { source = "integrations/github"; version = "~> 6.0" }
-    docker = { source = "kreuzwerker/docker"; version = "~> 3.0.1" }
-    # Ajout de VMware vSphere
-    vsphere = { source = "hashicorp/vsphere"; version = "~> 2.4.0" }
-  }
-}
-
 # --- Configuration WINDOWS SERVER 2019 (VMware) ---
 
 resource "vsphere_virtual_machine" "win_server" {
