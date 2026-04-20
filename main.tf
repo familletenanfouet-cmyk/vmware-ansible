@@ -56,3 +56,22 @@ resource "docker_container" "ubuntu_target" {
     external = 2223
   }
 }
+
+# --- Ressources REDHAT (via AlmaLinux) ---
+resource "docker_image" "redhat" {
+  name         = "almalinux:latest" # Le clone gratuit de Red Hat
+  keep_locally = false
+}
+
+resource "docker_container" "redhat_container" {
+  image      = docker_image.redhat.image_id
+  name       = "mon-redhat-docker"
+  stdin_open = true
+  tty        = true
+
+  ports {
+    internal = 22
+    external = 2224  # On utilise un port différent (2222 et 2223 sont déjà pris)
+  }
+}
+
