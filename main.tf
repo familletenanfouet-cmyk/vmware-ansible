@@ -53,6 +53,6 @@ resource "docker_container" "ubuntu_target" {
 
   ports {
     internal = 22
-    external = 2222
+    external = 2223
   }
 }
