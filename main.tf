@@ -30,8 +30,6 @@ variable "github_token" {
 # --- Configuration DOCKER ---
 # On laisse vide pour que Terraform choisisse automatiquement
 # le bon protocole (Unix pour Linux/Pipeline ou npipe pour Windows)
-provider "docker" {}
-
 # --- Ressources KALI ---
 resource "docker_image" "kali" {
   name         = "kalilinux/kali-rolling"
