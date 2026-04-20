@@ -24,7 +24,7 @@ variable "github_token" {
 
 # --- Configuration DOCKER ---
 # On laisse vide pour la détection automatique locale
-provider "docker" {}
+#provider "docker" {}
 
 # --- Ressources KALI ---
 resource "docker_image" "kali" {
