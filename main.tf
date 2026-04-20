@@ -12,6 +12,9 @@ terraform {
     }
   }
 }
+provider "docker" {
+  host = "tcp://192.168.146.130:2375" # Remplacez par votre IP
+}
 
 # --- Configuration GITHUB ---
 provider "github" {
